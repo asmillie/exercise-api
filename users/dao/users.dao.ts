@@ -83,4 +83,4 @@ class UsersDao {
     }
 }
 
-export default UsersDao;
+export default new UsersDao();
