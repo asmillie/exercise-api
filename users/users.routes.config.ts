@@ -1,7 +1,8 @@
-import express, { Request, Response, Application, NextFunction } from 'express';
+import {  Application } from 'express';
 import { CommonRoutesConfig } from '../common/common.routes.config';
-//TODO: https://www.toptal.com/express-js/nodejs-typescript-rest-api-pt-1 
-// Configuring the Express.js Routes of the Users Endpoints
+import UsersController from './controllers/users.controller';
+import UsersMiddleware from './middleware/users.middleware';
+// TODO: Continue with Part 3: https://www.toptal.com/express-js/nodejs-typescript-rest-api-pt-3
 export class UsersRoutes extends CommonRoutesConfig {
     constructor(app: Application) {
         super(app, 'UsersRoutes');
@@ -10,30 +11,30 @@ export class UsersRoutes extends CommonRoutesConfig {
     configureRoutes(): Application {
 
         this.app.route('/users')
-            .get((req: Request, res: Response) => {
-                res.status(200).send('List of Users');
-            })
-            .post((req: Request, res: Response) => {
-                res.status(200).send('Post to users');
-            });
+            .get(UsersController.listUsers)
+            .post(
+                UsersMiddleware.validateRequiredUserBodyFields,
+                UsersMiddleware.validateUniqueEmail,
+                UsersController.createUser
+            );
+
+        this.app.param('userId', UsersMiddleware.addUserIdToRequestBody);
 
         this.app.route('/users/:userId')
-            .all((req: Request, res: Response, next: NextFunction) => {
-                // Middleware function that runs before all requests
-                next();
-            })
-            .get((req: Request, res: Response) => {
-                res.status(200).send(`GET request for id ${req.params.userId}`);
-            })
-            .put((req: Request, res: Response) => {
-                res.status(200).send(`PUT request for id ${req.params.userId}`);
-            })
-            .patch((req: Request, res: Response) => {
-                res.status(200).send(`Patch request for id ${req.params.userId}`);
-            })
-            .delete((req: Request, res: Response) => {
-                res.status(200).send(`delete request for id ${req.params.userId}`);
-            });
+            .all(UsersMiddleware.validateUserExists)
+            .get(UsersController.getUserById)
+            .delete(UsersController.removeUser);
+
+        this.app.put('/users/:userId', [
+            UsersMiddleware.validateRequiredUserBodyFields,
+            UsersMiddleware.validateEmailBelongsToUser,
+            UsersController.put
+        ]);
+
+        this.app.patch('/users/:userId', [
+            UsersMiddleware.validatePatchEmail,
+            UsersController.patch
+        ]);
 
         return this.app;
     }
