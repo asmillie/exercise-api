@@ -77,6 +77,15 @@ class UsersMiddleware {
             });
         }
     }
+
+    async addUserIdToRequestBody(
+        req: Request,
+        res: Response,
+        next: NextFunction
+    ) {
+        req.body.id = req.params.userId;
+        next();
+    }
 }
 
 export default new UsersMiddleware();
