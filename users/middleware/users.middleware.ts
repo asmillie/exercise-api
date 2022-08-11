@@ -1,4 +1,4 @@
-import express, { NextFunction, Request, Response } from 'express';
+import { NextFunction, Request, Response } from 'express';
 import debug from 'debug';
 import usersService from '../services/users.service';
 
@@ -40,7 +40,7 @@ class UsersMiddleware {
         next: NextFunction
     ) {
         const user = await usersService.getUserByEmail(req.body.email);
-        if (user && user.id === req.params.userId) {
+        if (user && user._id === req.params.userId) {
             next();
         } else {
             res.status(400).send({
