@@ -2,7 +2,7 @@ import {  Application } from 'express';
 import { CommonRoutesConfig } from '../common/common.routes.config';
 import UsersController from './controllers/users.controller';
 import UsersMiddleware from './middleware/users.middleware';
-// TODO: Continue with Part 3: https://www.toptal.com/express-js/nodejs-typescript-rest-api-pt-3
+
 export class UsersRoutes extends CommonRoutesConfig {
     constructor(app: Application) {
         super(app, 'UsersRoutes');
