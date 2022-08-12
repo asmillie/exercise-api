@@ -26,7 +26,44 @@ class UsersDao {
         log('Created new instance of UsersDao');
     }
 
-    
+    async addUser(createUserDTO: CreateUserDTO) {
+        const userId = shortid.generate();
+        const user = new this.User({
+            _id: userId,
+            ...createUserDTO,
+            permissionFlags: 1
+        });
+
+        await user.save();
+        return userId;
+    }
+
+    async getUserByEmail(email: string) {
+        return this.User.findOne({ email }).exec();
+    }
+
+    async getUserById(userId: string) {
+        return this.User.findOne({ _id: userId }).populate('User').exec();
+    }
+
+    async getUsers(limit = 25, page = 0) {
+        return this.User.find()
+            .limit(limit)
+            .skip(limit * page)
+            .exec();
+    }
+
+    async updateUserById(userId: string, userDTO: PatchUserDTO | PutUserDTO) {
+        return await this.User.findOneAndUpdate(
+            { _id: userId },
+            { $set: userDTO },
+            { new: true }
+        ).exec();
+    }
+
+    async removeUserById(userId: string) {
+        return this.User.deleteOne({ _id: userId }).exec();
+    }
 }
 
 export default new UsersDao();
