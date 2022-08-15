@@ -1,7 +1,13 @@
+import dotenv from 'dotenv';
+
+const dotenvResult = dotenv.config();
+if (dotenvResult.error) {
+    throw dotenvResult.error;
+}
+
 import express, { Application, Request, Response } from 'express';
 import * as http from 'http';
 import { Server } from 'http';
-
 import * as winston from 'winston';
 import * as expressWinston from 'express-winston';
 import cors from 'cors';

@@ -13,3 +13,6 @@ benchmarks/graphs
 
 /dist
 /data
+
+# Environment Variables
+*.env
