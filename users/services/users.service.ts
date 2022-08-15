@@ -4,7 +4,7 @@ import { CreateUserDTO } from '../dto/create.user.dto';
 import { PutUserDTO } from '../dto/put.user.dto';
 import { PatchUserDTO } from '../dto/patch.user.dto';
 // TODO: https://www.toptal.com/express-js/nodejs-typescript-rest-api-pt-3
-// Continue @ Testing Our REST API
+// Adding express-validator
 class UsersService implements CRUD {
     async create(resource: CreateUserDTO) {
         return UsersDao.addUser(resource);
