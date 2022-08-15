@@ -3,8 +3,7 @@ import { CRUD } from '../../common/interfaces/crud.interface';
 import { CreateUserDTO } from '../dto/create.user.dto';
 import { PutUserDTO } from '../dto/put.user.dto';
 import { PatchUserDTO } from '../dto/patch.user.dto';
-// TODO: https://www.toptal.com/express-js/nodejs-typescript-rest-api-pt-3
-// Adding express-validator
+
 class UsersService implements CRUD {
     async create(resource: CreateUserDTO) {
         return UsersDao.addUser(resource);
@@ -33,6 +32,10 @@ class UsersService implements CRUD {
     async getUserByEmail(email: string) {
         return UsersDao.getUserByEmail(email);
     }    
+
+    async getUserByEmailWithPassword(email: string) {
+        return UsersDao.getUserByEmailWithPassword(email);
+    }
 }
 
 export default new UsersService();
