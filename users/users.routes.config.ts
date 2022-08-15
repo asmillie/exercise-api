@@ -4,8 +4,7 @@ import { CommonRoutesConfig } from '../common/common.routes.config';
 import UsersController from './controllers/users.controller';
 import UsersMiddleware from './middleware/users.middleware';
 import BodyValidationMiddleware from '../common/middleware/body.validation.middleware';
-// TODO: https://www.toptal.com/express-js/nodejs-typescript-rest-api-pt-3
-// Auth vs. Permissions
+
 export class UsersRoutes extends CommonRoutesConfig {
     constructor(app: Application) {
         super(app, 'UsersRoutes');
