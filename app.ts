@@ -14,6 +14,7 @@ import cors from 'cors';
 import debug from 'debug';
 
 import { CommonRoutesConfig } from './common/common.routes.config';
+import { AuthRoutes } from './auth/auth.routes.config';
 import { UsersRoutes } from './users/users.routes.config';
 
 const app: Application = express();
@@ -44,6 +45,7 @@ if (!process.env.DEBUG) {
 
 app.use(expressWinston.logger(loggerOpts));
 
+routes.push(new AuthRoutes(app));
 routes.push(new UsersRoutes(app));
 
 const serverRunMessage = `Server running @ http://localhost:${port}`;
