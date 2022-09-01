@@ -6,7 +6,7 @@ import usersService from '../../users/services/users.service';
 
 // @ts-expect-error
 const jwtSecret: string = process.env.JWT_SECRET;
-
+// TODO: Invalidate previous tokens upon refresh and limit time between new token requests
 class JwtMiddleware {
 
     verifyRefreshBodyField(
